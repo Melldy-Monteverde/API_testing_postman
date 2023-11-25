@@ -1,0 +1,1403 @@
+{
+	"info": {
+		"_postman_id": "92e8c7d7-b11e-436d-9d92-9136b228cf17",
+		"name": "REQRES_API_TESTING",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18644604"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Register user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"pm.test('Response status code must be 200', () => pm.expect(pm.response.code).to.equal(200))",
+									"",
+									"const schema = {",
+									"  type: 'object',",
+									"  properties: {",
+									"    id: {type: 'number'},",
+									"    token: {type: 'string'}",
+									"  },",
+									"  required: ['id', 'token'],",
+									"  additionalProperties: false",
+									"}",
+									"",
+									"pm.test('Validate response body have a valid schema', () => {",
+									"  pm.response.to.have.jsonSchema(schema)",
+									"})",
+									"",
+									"pm.test('Validate response body properties', () => {",
+									"  pm.expect(response).to.be.an('object')",
+									"  pm.expect(response).to.have.property('id').and.to.be.a('number')",
+									"  pm.expect(response).to.have.property('token').and.to.be.a('string')",
+									"})",
+									"",
+									"const token = response.token",
+									"pm.collectionVariables.set('token', token)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear()"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"eve.holt@reqres.in\",\n    \"password\": \"{{$randomPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"eve.holt@reqres.in\",\n    \"password\": \"{{$randomPassword}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 25 Nov 2023 00:16:46 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700871406&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=deXEp3wM1r12jZLva%2BqhFWuH4C%2F3z3sFf%2FAp41TXmLU%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700871406&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=deXEp3wM1r12jZLva%2BqhFWuH4C%2F3z3sFf%2FAp41TXmLU%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"24-4iP0za1geN2he+ohu8F0FhCjLks\""
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "82b5b46e1af0ab38-EZE"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"token\": \"QpwL5tke4Pnpja7X4\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"pm.test('Response status code must be 200', () => pm.expect(pm.response.code).to.equal(200))",
+									"",
+									"pm.test(\"Validate response body properties\", () => {",
+									"  pm.expect(response).to.be.an(\"object\")",
+									"  pm.expect(response).to.have.property(\"token\").and.to.be.a(\"string\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear()",
+									"const token = pm.collectionVariables.get(\"token\")",
+									"",
+									"pm.test(\"Validate if token exists\", () => {",
+									"  token ? console.log(`Token is ${token}`) : new Error(\"Token does not exist\")",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"eve.holt@reqres.in\",\n    \"password\": \"{{$randomPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"eve.holt@reqres.in\",\n    \"password\": \"{{$randomPassword}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 25 Nov 2023 00:19:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "29"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700871549&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=kK7Ws611JZfAyzeWrnyO6eaz0onZTE49ce5%2BihU9P88%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700871549&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=kK7Ws611JZfAyzeWrnyO6eaz0onZTE49ce5%2BihU9P88%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"1d-lGCrvD6B7Qzk11+2C98+nGhhuec\""
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "82b5b7ebdd10ab38-EZE"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"QpwL5tke4Pnpja7X4\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get users",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear()"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// parse response body in a js object",
+									"const response = pm.response.json()",
+									"const dataContent = response.data",
+									"const regexURL = /^(https?:\\/\\/)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w.-]*)*\\/?$/;",
+									"",
+									"pm.test('Response status code must be 200', () => pm.expect(pm.response.code).to.equal(200))",
+									"",
+									"// difine the body response that should have the response",
+									"const schema = {",
+									"  type: 'object',",
+									"  properties: {",
+									"    page: {",
+									"      type: 'integer'",
+									"    },",
+									"    per_page: {",
+									"      type: 'integer'",
+									"    },",
+									"    total: {",
+									"      type: 'integer'",
+									"    },",
+									"    total_pages: {",
+									"      type: 'integer'",
+									"    },",
+									"    data: {",
+									"      type: 'array',",
+									"      items: {",
+									"        type: 'object',",
+									"        properties: {",
+									"          id: {",
+									"            type: 'number'",
+									"          },",
+									"          email: {",
+									"            type: 'string'",
+									"          },",
+									"          first_name: {",
+									"            type: 'string',",
+									"            pattern: \"^[A-Za-z\\\\s]+$\"",
+									"          },",
+									"          last_name: {",
+									"            type: 'string',",
+									"            pattern: \"^[A-Za-z\\\\s]+$\"",
+									"          },",
+									"          avatar: {",
+									"            type: 'string'",
+									"          }",
+									"        },",
+									"        required: ['id', 'email', 'first_name', 'last_name', 'avatar'],",
+									"        additionalProperties: false",
+									"      }",
+									"    },",
+									"    support: {",
+									"      type: 'object',",
+									"      properties: {",
+									"        url: {type: 'string'},",
+									"        text: {type: 'string'}",
+									"      },",
+									"      required: ['url', 'text']",
+									"    }",
+									"  },",
+									"  required: ['page', 'per_page', 'total', 'total_pages', 'data', 'support'],",
+									"  additionalProperties: false",
+									"}",
+									"",
+									"pm.test('Validate response body have a valid schema', () => {",
+									"  pm.response.to.have.jsonSchema(schema)",
+									"})",
+									"",
+									"// validate each one item an him properties",
+									"dataContent.forEach((item, idx) => {",
+									"  pm.test(`Validate item ${idx} in response`, () => {",
+									"    pm.expect(item).to.be.an('object')",
+									"    pm.expect(item).to.have.property('id').and.to.be.an('number')",
+									"    pm.expect(item).to.have.property('email').and.to.be.an('string')",
+									"    pm.expect(item).to.have.property('first_name').and.to.be.an('string')",
+									"    pm.expect(item).to.have.property('last_name').and.to.be.an('string')",
+									"    pm.expect(item).to.have.property('avatar').and.to.be.an('string')",
+									"    ",
+									"    const regexEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/",
+									"",
+									"    pm.test('Validate the email has a valid pattern', () => {",
+									"      pm.expect(item.email).to.match(regexEmail)",
+									"    })",
+									"",
+									"    pm.test('Validate the avatar url has a valid pattern', () => {",
+									"      pm.expect(item.avatar).to.match(regexURL)",
+									"    })",
+									"  })",
+									"})",
+									"",
+									"const userId = dataContent[0].id",
+									"pm.collectionVariables.set('user_id', userId)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 24 Nov 2023 21:16:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700860457&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=wMNLWyH2RamBgGhvf%2B3F9ItCmBKuLnw3HQwbGkcSwhI%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700860457&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=wMNLWyH2RamBgGhvf%2B3F9ItCmBKuLnw3HQwbGkcSwhI%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"3e4-2RLXvr5wTg9YQ6aH95CkYoFNuO8\""
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=14400"
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "HIT"
+								},
+								{
+									"key": "Age",
+									"value": "106"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "82b4abb84d2cab38-EZE"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"page\": 1,\n    \"per_page\": 6,\n    \"total\": 12,\n    \"total_pages\": 2,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"email\": \"george.bluth@reqres.in\",\n            \"first_name\": \"George\",\n            \"last_name\": \"Bluth\",\n            \"avatar\": \"https://reqres.in/img/faces/1-image.jpg\"\n        },\n        {\n            \"id\": 2,\n            \"email\": \"janet.weaver@reqres.in\",\n            \"first_name\": \"Janet\",\n            \"last_name\": \"Weaver\",\n            \"avatar\": \"https://reqres.in/img/faces/2-image.jpg\"\n        },\n        {\n            \"id\": 3,\n            \"email\": \"emma.wong@reqres.in\",\n            \"first_name\": \"Emma\",\n            \"last_name\": \"Wong\",\n            \"avatar\": \"https://reqres.in/img/faces/3-image.jpg\"\n        },\n        {\n            \"id\": 4,\n            \"email\": \"eve.holt@reqres.in\",\n            \"first_name\": \"Eve\",\n            \"last_name\": \"Holt\",\n            \"avatar\": \"https://reqres.in/img/faces/4-image.jpg\"\n        },\n        {\n            \"id\": 5,\n            \"email\": \"charles.morris@reqres.in\",\n            \"first_name\": \"Charles\",\n            \"last_name\": \"Morris\",\n            \"avatar\": \"https://reqres.in/img/faces/5-image.jpg\"\n        },\n        {\n            \"id\": 6,\n            \"email\": \"tracey.ramos@reqres.in\",\n            \"first_name\": \"Tracey\",\n            \"last_name\": \"Ramos\",\n            \"avatar\": \"https://reqres.in/img/faces/6-image.jpg\"\n        }\n    ],\n    \"support\": {\n        \"url\": \"https://reqres.in/#support-heading\",\n        \"text\": \"To keep ReqRes free, contributions towards server costs are appreciated!\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get users by id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear()",
+									"const user_id = pm.collectionVariables.get('user_id')",
+									"",
+									"pm.test('Validate the user_id exists', () => {",
+									"  user_id ? console.log(`Looking for id: ${user_id}`) : new Error('There is not new id')",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// parse response body in a js object",
+									"const response = pm.response.json()",
+									"const dataContent = response.data",
+									"const regexURL = /^(https?:\\/\\/)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w.-]*)*\\/?$/;",
+									"",
+									"pm.test('Response status code must be 200', () => pm.expect(pm.response.code).to.equal(200))",
+									"",
+									"// difine the body response that should have the response",
+									"const schema = {",
+									"  type: 'object',",
+									"  properties: {",
+									"    data: {",
+									"      type: 'object',",
+									"      properties: {",
+									"        id: { type: 'number' },",
+									"        email: { type: 'string' },",
+									"        first_name: {",
+									"          type: 'string',",
+									"          pattern: \"^[A-Za-z\\\\s]+$\"",
+									"        },",
+									"        last_name: {",
+									"          type: 'string',",
+									"          pattern: \"^[A-Za-z\\\\s]+$\"",
+									"        },",
+									"        avatar: { type: 'string' }",
+									"      },",
+									"      required: ['id', 'email', 'first_name', 'last_name', 'avatar'],",
+									"      additionalProperties: false",
+									"    },",
+									"    support: {",
+									"      type: 'object',",
+									"      properties: {",
+									"        url: { type: 'string' },",
+									"        text: { type: 'string' }",
+									"      },",
+									"      required: ['url', 'text'],",
+									"      additionalProperties: false",
+									"    }",
+									"  },",
+									"  required: ['data', 'support'],",
+									"  additionalProperties: false",
+									"}",
+									"",
+									"pm.test('Validate response body have a valid schema', () => {",
+									"  pm.response.to.have.jsonSchema(schema)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get users by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/users/{{user_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{user_id}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 24 Nov 2023 23:55:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700128498&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=SbD9Nm2GFGOc3RZ%2B8tQZPsI1HNEEBtSdtdfiyY6CZmU%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700128498&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=SbD9Nm2GFGOc3RZ%2B8tQZPsI1HNEEBtSdtdfiyY6CZmU%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"118-P3iKcVpIgCj9HqYeOOrGLX8qJVc\""
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=14400"
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "HIT"
+								},
+								{
+									"key": "Age",
+									"value": "4518"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "82b594905b35ab38-EZE"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"email\": \"george.bluth@reqres.in\",\n        \"first_name\": \"George\",\n        \"last_name\": \"Bluth\",\n        \"avatar\": \"https://reqres.in/img/faces/1-image.jpg\"\n    },\n    \"support\": {\n        \"url\": \"https://reqres.in/#support-heading\",\n        \"text\": \"To keep ReqRes free, contributions towards server costs are appreciated!\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear()",
+									"const body = pm.request.body",
+									"const bodyParsed = body.raw",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"pm.test('Status code is 201', () => {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									"",
+									"const schema = {",
+									"  type: 'object',",
+									"  properties: {",
+									"    name: {",
+									"      type: 'string',",
+									"      pattern: \"^[A-Za-z\\\\s]+$\"",
+									"      },",
+									"    job: {",
+									"      type: 'string',",
+									"      pattern: \"^[A-Za-z\\\\s]+$\"",
+									"      },",
+									"    id: { type: 'string' },",
+									"    createdAt: {",
+									"      type: 'string',",
+									"      format: 'date-time'",
+									"    },",
+									"  },",
+									"  required: ['name', 'job', 'id', 'createdAt'],",
+									"  additionalProperties: false",
+									"}",
+									"",
+									"pm.test('Validate response body have a valid schema', () => {",
+									"  pm.response.to.have.jsonSchema(schema)",
+									"})",
+									"",
+									"pm.test('Validate each property in response body', () => {",
+									"  pm.expect(response).to.be.an('object')",
+									"  pm.expect(response.name).to.be.a('string')",
+									"  pm.expect(response.job).to.be.a('string')",
+									"  pm.expect(response.id).to.be.a('string')",
+									"  pm.expect(response.createdAt).to.be.a('string')",
+									"})",
+									"",
+									"const new_id = response.id",
+									"pm.collectionVariables.set('new_id', new_id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"job\": \"{{$randomJobTitle}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"job\": \"{{$randomJobTitle}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 24 Nov 2023 23:27:17 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "109"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700868437&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=C%2BRZL2g6hjY8vZhFW17Ke6dXgRdQovruMO%2FgqTorVow%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700868437&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=C%2BRZL2g6hjY8vZhFW17Ke6dXgRdQovruMO%2FgqTorVow%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"6d-h35wdEiyF0L3plwDSTiCtCKEQ2A\""
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "82b56bf57bf6ab26-EZE"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"Hugo Towne V\",\n    \"job\": \"Forward Assurance Executive\",\n    \"id\": \"361\",\n    \"createdAt\": \"2023-11-24T23:27:17.704Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "User not found",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear()",
+									"const new_id = pm.collectionVariables.get('new_id')",
+									"",
+									"pm.test('Validate the new_id exists', () => {",
+									"  new_id ? console.log(`New id is: ${new_id}`) : new Error('There is not new id')",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"pm.test('Status code must be 404', () => {",
+									"  pm.response.to.have.status(404)",
+									"})",
+									"",
+									"pm.test('Validate response body is empty', () => {",
+									"  pm.expect(response).to.be.empty",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{not_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{not_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/users/{{not_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{not_id}}"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 25 Nov 2023 03:22:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700882524&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=MpIa9CkXP9lcDSs6ZzrZBelFRQJf927oCmM5jjwzRTc%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700882524&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=MpIa9CkXP9lcDSs6ZzrZBelFRQJf927oCmM5jjwzRTc%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=14400"
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "MISS"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "82b6c3de5f939c48-IAD"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						}
+					]
+				},
+				{
+					"name": "Update user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear()",
+									"const body = pm.request.body",
+									"const bodyParsed = body.raw",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"pm.test('Status code is 200', () => {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const schema = {",
+									"  type: 'object',",
+									"  properties: {",
+									"    name: {type: 'string'},",
+									"    job: {type: 'string'},",
+									"    updatedAt: {type: 'string'},",
+									"  },",
+									"  required: ['name', 'job', 'updatedAt'],",
+									"  additionalProperties: false",
+									"}",
+									"",
+									"pm.test('Validate response body have a valid schema', () => {",
+									"  pm.response.to.have.jsonSchema(schema)",
+									"})",
+									"",
+									"pm.test('Validate each property in response body', () => {",
+									"  pm.expect(response).to.be.an('object')",
+									"  pm.expect(response.name).to.be.a('string')",
+									"  pm.expect(response.job).to.be.a('string')",
+									"  pm.expect(response.updatedAt).to.be.a('string')",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"job\": \"{{$randomJobTitle}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update user",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"{{$randomFullName}}\",\n  \"job\": \"{{$randomJobTitle}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/{{user_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{user_id}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 24 Nov 2023 23:59:29 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700870369&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=n54KErY6WUmpMKW8L5mnrthCU813NdazYDpG9yUb5E4%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700870369&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=n54KErY6WUmpMKW8L5mnrthCU813NdazYDpG9yUb5E4%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"64-OizZsItBNS6c2+b/foNVX/BjzYw\""
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "82b59b207d30ab38-EZE"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"Helen Cremin\",\n    \"job\": \"Internal Solutions Specialist\",\n    \"updatedAt\": \"2023-11-24T23:59:29.757Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.clear()",
+									"const user_id = pm.collectionVariables.get('user_id')",
+									"",
+									"pm.test('Validate the user_id exists', () => {",
+									"  user_id ? console.log(`Looking for id: ${user_id}`) : new Error('There is not new id')",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 204', () => {",
+									"  pm.response.to.have.status(204);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete user",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/users/{{user_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{user_id}}"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 25 Nov 2023 00:03:52 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700870632&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=Nakm2VPH%2BUal9GgbUQt%2BH33N6onuOJZJmjMJmBGG11k%3D\"}]}"
+								},
+								{
+									"key": "Reporting-Endpoints",
+									"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700870632&sid=c4c9725f-1ab0-44d8-820f-430df2718e11&s=Nakm2VPH%2BUal9GgbUQt%2BH33N6onuOJZJmjMJmBGG11k%3D"
+								},
+								{
+									"key": "Nel",
+									"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "82b5a18c8895ab38-EZE"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://reqres.in",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": ""
+		},
+		{
+			"key": "new_id",
+			"value": ""
+		},
+		{
+			"key": "not_id",
+			"value": "10948963",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}
