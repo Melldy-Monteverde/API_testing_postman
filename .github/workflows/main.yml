@@ -18,4 +18,4 @@ jobs:
           npm install -g newman-reporter-htmlextra
       - name: Run API tests and generate reports
         run: |
-          newman run "18644604-92e8c7d7-b11e-436d-9d92-9136b228cf17" -e "18644604-26f4a5e5-6767-416a-8d9e-b715015b6f7d" --reporters cli,htmlextra
+          newman run "18644604-92e8c7d7-b11e-436d-9d92-9136b228cf17" --reporters cli,htmlextra
