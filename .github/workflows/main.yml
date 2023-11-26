@@ -48,4 +48,5 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./reports
+          preview: false
           artifact_name: RunResultsReport
