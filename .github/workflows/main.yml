@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: "18"
           
@@ -29,10 +29,16 @@ jobs:
       - name: Run API tests and generate reports
         run: |
           newman run "https://api.postman.com/collections/18644604-92e8c7d7-b11e-436d-9d92-9136b228cf17?access_key=${{ secrets.POSTMAN_API_KEY_NEWMAN }}" -r cli,htmlextra --reporter-htmlextra-export reports/report.html
+
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./reports
       
       - name: Output the run details
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: RunReports
+          name: RunResultsReport
           path: reports
 
