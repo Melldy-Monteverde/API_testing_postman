@@ -33,7 +33,7 @@ jobs:
       - name: Publish to GitHub Pages
         uses: actions/deploy-pages@v1.2.9
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./reports
       
       - name: Output the run details
