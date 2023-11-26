@@ -31,7 +31,7 @@ jobs:
           newman run "https://api.postman.com/collections/18644604-92e8c7d7-b11e-436d-9d92-9136b228cf17?access_key=${{ secrets.POSTMAN_API_KEY_NEWMAN }}" -r cli,htmlextra --reporter-htmlextra-export reports/report.html
 
       - name: Publish to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: actions/deploy-pages@v1.2.9
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./reports
