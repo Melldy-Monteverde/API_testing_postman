@@ -2,6 +2,15 @@ name: Automated API tests using Postman CLI
 
 on: push
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   automated-api-tests:
     runs-on: ubuntu-latest
@@ -38,3 +47,14 @@ jobs:
         with:
           name: RunResultsReport
           path: reports
+
+      - name: Deploy GitHub Pages site
+        uses: actions/deploy-pages@v2.0.1
+        with:
+          token: ${{ github.token }}
+          timeout: 600000
+          error_count: 10
+          reporting_interval: 5000
+          artifact_name: results
+          preview: false
+          
