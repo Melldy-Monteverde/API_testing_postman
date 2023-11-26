@@ -55,6 +55,5 @@ jobs:
           timeout: 600000
           error_count: 10
           reporting_interval: 5000
-          artifact_name: results
+          artifact_name: RunResultsReport
           preview: false
-          
