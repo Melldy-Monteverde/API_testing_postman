@@ -42,11 +42,3 @@ jobs:
         with:
           name: RunResultsReport
           path: reports
-
-      - name: Publish to GitHub Pages
-        uses: actions/deploy-pages@v2.0.1
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./reports
-          preview: false
-          artifact_name: RunResultsReport
